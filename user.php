@@ -10,22 +10,20 @@ require_login();
 // is this for a particular user?
 $userid = optional_param('id', 0, PARAM_INTEGER);
 
-// system (global) context
-$context = get_context_instance(CONTEXT_SYSTEM);
-$PAGE->set_context($context);
-
 // the current user...
 global $USER;
 
-if ($userid) {
-	// is current user allowed to see this user's information?
-	if ($USER->id!=$userid) {
-		// hmm, not the same user, but let's allow a site manager or administrator to view it
-		require_capability('block/gp11cmg:viewuser', $context);
-	}
-} else {
-	// do current user by default
+if (!$userid)
 	$userid = $USER->id;
+
+// user context
+$usercontext   = get_context_instance(CONTEXT_USER, $userid, MUST_EXIST);
+$PAGE->set_context($usercontext);
+
+// is current user allowed to see this user's information?
+if ($USER->id!=$userid) {
+	// hmm, not the same user, but let's allow a site manager or administrator to view it
+	require_capability('block/gp11cmg:viewuser', $usercontext);
 }
 
 // DB

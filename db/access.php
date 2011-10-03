@@ -6,7 +6,7 @@ $capabilities = array(
     'block/gp11cmg:viewuser' => array(
 
         'captype' => 'read',
-        'contextlevel' => CONTEXT_SITE,
+        'contextlevel' => CONTEXT_USER,
         'archetypes' => array(
             'manager' => CAP_ALLOW,
             'admin' => CAP_ALLOW
